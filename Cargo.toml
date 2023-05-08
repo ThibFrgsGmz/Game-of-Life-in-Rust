@@ -1,0 +1,25 @@
+[package]
+name = "Game-of-Life-in-Rust"
+edition = "2022"
+version = "0.0.0"
+rust-version = "1.67.1"
+authors = ["ThibFrgsGmz"]
+description = "A short description of your project."
+documentation = "https://github.com/ThibFrgsGmz/Game-of-Life-in-Rust/blob/main/README.md"
+homepage = "https://github.com/cooperwalbrun/rust-template"
+repository = "https://github.com/ThibFrgsGmz/Game-of-Life-in-Rust"
+keywords = [""]
+readme = "README.md"
+license-file = "AGPL-3.0 license "
+exclude = [""]
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+# If this is a library and not an end-user application, it is recommended to use https://github.com/dtolnay/thiserror
+# If this is an end-user application and not a library, it is recommended to use one of the following:
+#    Non-CLI programs: https://github.com/dtolnay/anyhow
+#    CLI-based programs: https://github.com/yaahc/color-eyre
+
+[dev-dependencies]
+# Add development- and/or testing-specific dependencies

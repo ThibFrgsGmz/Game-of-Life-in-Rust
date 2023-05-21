@@ -1,4 +1,8 @@
 use rand::prelude::*;
+mod grid;
+mod rules;
+mod display;
+mod simulation;
 
 fn main() {
     println!("Hello, world!");

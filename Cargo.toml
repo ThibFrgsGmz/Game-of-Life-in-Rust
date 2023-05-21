@@ -16,10 +16,7 @@ exclude = [""]
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-# If this is a library and not an end-user application, it is recommended to use https://github.com/dtolnay/thiserror
-# If this is an end-user application and not a library, it is recommended to use one of the following:
-#    Non-CLI programs: https://github.com/dtolnay/anyhow
-#    CLI-based programs: https://github.com/yaahc/color-eyre
+rand = "0.8.5"
 
 [dev-dependencies]
 # Add development- and/or testing-specific dependencies

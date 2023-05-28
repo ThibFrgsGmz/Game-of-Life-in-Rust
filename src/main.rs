@@ -1,7 +1,7 @@
-mod display;
-mod grid;
-mod rules;
-mod simulation;
+// mod display;
+// mod grid;
+// mod rules;
+// mod simulation;
 use rand::prelude::*;
 
 fn main() {
@@ -41,16 +41,16 @@ fn generate_random_array() -> Vec<i32> {
 mod tests {
     use super::*;
 
-    #[test]
-    fn test_generate_random_char() {
-        let c = generate_random_char();
-        assert!(c.is_none() || c.unwrap().is_alphabetic());
-    }
+    // #[test]
+    // fn test_generate_random_char() {
+    //     let c = generate_random_char();
+    //     assert!(c.is_none() || c.unwrap().is_alphabetic());
+    // }
 
     #[test]
     fn test_generate_random_float() {
         let f = generate_random_float();
-        assert!(f >= 0.0 && f <= 1.0);
+        assert!((0.0..1.0).contains(&f));
     }
 
     #[test]

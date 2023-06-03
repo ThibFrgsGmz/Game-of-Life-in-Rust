@@ -2,63 +2,57 @@
 // mod grid;
 // mod rules;
 // mod simulation;
-use rand::prelude::*;
+use rand::distributions::{Distribution, Uniform};
+use rand::Rng;
+
+#[derive(Copy, Clone, PartialEq)]
+pub enum Cell {
+    Dead,
+    Live,
+}
 
 fn main() {
     println!("Hello, world!");
 
-    if let Some(c) = generate_random_char() {
-        println!("char: {}", c);
-    }
+    let width = 10;
+    let height = 20;
 
-    let _y = generate_random_float();
+    let mut array = vec![vec![Cell::Dead; width]; height];
 
-    let _nums = generate_random_array();
-}
-
-fn generate_random_char() -> Option<char> {
-    if rand::random() {
-        // generates a boolean
-        Some(rand::random::<char>()) // generates a random character
-    } else {
-        None
-    }
-}
-
-fn generate_random_float() -> f64 {
     let mut rng = rand::thread_rng();
-    rng.gen() // generates a float between 0 and 1
-}
+    let cell_dist = Uniform::from(0..2);
 
-fn generate_random_array() -> Vec<i32> {
-    let mut rng = rand::thread_rng();
-    let mut nums: Vec<i32> = (1..100).collect();
-    nums.shuffle(&mut rng);
-    nums
-}
-
-#[cfg(test)]
-mod tests {
-    use super::*;
-
-    // #[test]
-    // fn test_generate_random_char() {
-    //     let c = generate_random_char();
-    //     assert!(c.is_none() || c.unwrap().is_alphabetic());
-    // }
-
-    #[test]
-    fn test_generate_random_float() {
-        let f = generate_random_float();
-        assert!((0.0..1.0).contains(&f));
+    for (i, row) in array.iter().enumerate() {
+        for (j, _cell) in row.iter().enumerate() {
+            let mut _xx = array[i][j];
+            _xx = match cell_dist.sample(&mut rng) {
+                0 => Cell::Dead,
+                _ => Cell::Live,
+            };
+        }
     }
 
-    #[test]
-    fn test_generate_random_array() {
-        let nums = generate_random_array();
-        assert_eq!(nums.len(), 99);
-        for i in 1..100 {
-            assert!(nums.contains(&i));
+    for (i, row) in array.iter().enumerate() {
+        for (j, cell) in row.iter().enumerate() {
+            match cell {
+                Cell::Dead => println!("Cell at ({}, {}) is Dead", i, j),
+                Cell::Live => println!("Cell at ({}, {}) is Alive", i, j),
+            }
         }
     }
 }
+
+// fn generate_random_float() -> f64 {
+//     let mut rng = rand::thread_rng();
+//     rng.gen() // generates a float between 0 and 1
+// }
+// #[cfg(test)]
+// mod tests {
+//     use super::*;
+
+//     #[test]
+//     fn test_generate_random_float() {
+//         let f = generate_random_float();
+//         assert!((0.0..1.0).contains(&f));
+//     }
+// }

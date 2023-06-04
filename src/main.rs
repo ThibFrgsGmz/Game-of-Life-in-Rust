@@ -1,7 +1,3 @@
-// mod display;
-// mod grid;
-// mod rules;
-// mod simulation;
 use rand::distributions::{Distribution, Uniform};
 use rand::Rng;
 

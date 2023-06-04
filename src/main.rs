@@ -11,8 +11,32 @@ pub enum Cell {
     Live,
 }
 
+pub fn calculate(op: char, a: i64, b: i64) -> Option<i64> {
+    match op {
+        '+' => Some(a + b),
+        '-' => Some(a - b),
+        '*' => Some(a * b),
+        '/' => {
+            if b != 0 {
+                Some(a / b)
+            } else {
+                None
+            }
+        }
+        _ => None,
+    }
+}
+
 fn main() {
     println!("Hello, world!");
+
+    let op = '+';
+    let a = 5;
+    let b = 3;
+    match calculate(op, a, b) {
+        Some(result) => println!("Result: {}", result),
+        None => println!("Error: invalid operation or division by zero"),
+    }
 
     let width = 10;
     let height = 20;

@@ -14,6 +14,9 @@ license-file = "AGPL-3.0 license "
 exclude = [""]
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+[lib]
+name = "game_of_life_in_rust"
+path = "src/main.rs"
 
 [dependencies]
 rand = "0.8.5"

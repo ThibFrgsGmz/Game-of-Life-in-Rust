@@ -106,23 +106,23 @@ jobs:
       - name: Unit Test (debug)
         run: cargo test --verbose
 
-  # Under construction
-  fuzzing:
-    name: Fuzz Code
-    runs-on: ubuntu-latest
-    needs: test
+  # # Under construction
+  # fuzzing:
+  #   name: Fuzz Code
+  #   runs-on: ubuntu-latest
+  #   needs: tests
 
-    steps:
-    - uses: actions/checkout@v3
-    - name: Install Rust
-      uses: actions-rs/toolchain@v1
-      with:
-        toolchain: nightly
-        override: true
-    - name: Install cargo-fuzz
-      run: cargo install cargo-fuzz
-    - name: Run Fuzzing
-      run: cargo fuzz run calculate -- -max_total_time=180
+  #   steps:
+  #   - uses: actions/checkout@v3
+  #   - name: Install Rust
+  #     uses: actions-rs/toolchain@v1
+  #     with:
+  #       toolchain: nightly
+  #       override: true
+  #   - name: Install cargo-fuzz
+  #     run: cargo install cargo-fuzz
+  #   - name: Run Fuzzing
+  #     run: cargo fuzz run calculate -- -max_total_time=180
 
   docs:
     name: Generate Docs

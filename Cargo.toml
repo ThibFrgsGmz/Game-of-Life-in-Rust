@@ -21,8 +21,8 @@ exclude = [""]
 [dependencies]
 rand = "0.8.5"
 structopt = "0.3"
-tui = { version = "0.14", features = ["crossterm"] }
-crossterm = "0.19"
+tui = { version = "0.19", features = ["crossterm"] }
+crossterm = "0.26.1"
 
 [dev-dependencies]
 # Add development- and/or testing-specific dependencies

@@ -1,5 +1,6 @@
-use rand::distributions::{Distribution, Uniform};
-// use rand::Rng;
+use rand::rngs::ThreadRng;
+use rand::seq::SliceRandom;
+use structopt::StructOpt;
 
 #[derive(Debug, Copy, Clone, PartialEq)]
 pub enum Cell {
@@ -7,68 +8,56 @@ pub enum Cell {
     Live,
 }
 
-pub fn calculate(op: char, a: i64, b: i64) -> Option<i64> {
-    match op {
-        '+' => Some(a + b),
-        '-' => Some(a - b),
-        '*' => Some(a * b),
-        '/' => {
-            if b != 0 {
-                Some(a / b)
-            } else {
-                None
-            }
+#[derive(StructOpt, Debug)]
+#[structopt(
+    name = "cell_generator",
+    about = "A cell generator with random initialization."
+)]
+pub struct Opt {
+    /// Width of the cell grid
+    #[structopt(short = "w", long = "width", default_value = "10")]
+    width: usize,
+
+    /// Height of the cell grid
+    #[structopt(short = "h", long = "height", default_value = "20")]
+    height: usize,
+
+    /// Number of cells to randomly initialize as Live
+    #[structopt(short = "n", long = "live", default_value = "10")]
+    live: usize,
+}
+
+fn main() {
+    let opt = Opt::from_args();
+
+    println!(
+        "Creating a {} x {} grid with {} live cells...",
+        opt.width, opt.height, opt.live
+    );
+
+    let mut array = create_array(opt.width, opt.height);
+    initialize_array(&mut array, opt.width, opt.height, opt.live);
+    print_array(&array);
+}
+
+fn create_array(width: usize, height: usize) -> Vec<Vec<Cell>> {
+    vec![vec![Cell::Dead; width]; height]
+}
+
+fn initialize_array(array: &mut [Vec<Cell>], width: usize, height: usize, live: usize) {
+    let mut rng: ThreadRng = rand::thread_rng();
+    let mut indices: Vec<_> = (0..width * height).collect();
+    indices.shuffle(&mut rng);
+
+    indices.iter().take(live).for_each(|&i| {
+        array[i / width][i % width] = Cell::Live;
+    });
+}
+
+fn print_array(array: &[Vec<Cell>]) {
+    for (i, row) in array.iter().enumerate() {
+        for (j, cell) in row.iter().enumerate() {
+            println!("Cell at ({}, {}) is {:?}", i, j, cell);
         }
-        _ => None,
     }
 }
-fn main() {
-    println!("Hello, world!");
-
-    // let op = '+';
-    // let a = 5;
-    // let b = 3;
-    // match calculate(op, a, b) {
-    //     Some(result) => println!("Result: {}", result),
-    //     None => println!("Error: invalid operation or division by zero"),
-    // }
-
-    let width = 10;
-    let height = 20;
-    let mut array = vec![vec![Cell::Dead; width]; height];
-
-    let mut rng = rand::thread_rng();
-    let cell_dist = Uniform::from(0..2);
-
-    (0..height).for_each(|i| {
-        (0..width).for_each(|j| {
-            array[i][j] = match cell_dist.sample(&mut rng) {
-                0 => Cell::Dead,
-                _ => Cell::Live,
-            };
-            println!("Cell at ({}, {}) is {:?}", i, j, array[i][j]);
-        });
-    });
-
-    array.iter().enumerate().for_each(|(i, row)| {
-        row.iter().enumerate().for_each(|(j, cell)| match cell {
-            Cell::Dead => println!("Cell at ({}, {}) is Dead", i, j),
-            _ => println!("Cell at ({}, {}) is Alive", i, j),
-        });
-    });
-}
-
-// fn generate_random_float() -> f64 {
-//     let mut rng = rand::thread_rng();
-//     rng.gen() // generates a float between 0 and 1
-// }
-// #[cfg(test)]
-// mod tests {
-//     use super::*;
-
-//     #[test]
-//     fn test_generate_random_float() {
-//         let f = generate_random_float();
-//         assert!((0.0..1.0).contains(&f));
-//     }
-// }
